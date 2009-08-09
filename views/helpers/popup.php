@@ -1,6 +1,9 @@
 <?php
 class PopupHelper extends AppHelper {
   
+  /************************************************************
+    * Load Html and Javascript helpers to use for the popup link
+    */
   var $helpers = array('Html', 'Javascript');
   
   /************************************************************

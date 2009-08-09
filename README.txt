@@ -8,17 +8,20 @@ Version: 1.0
 Website: http://www.webtechnick.com
 Licence: MIT
 
-
+Requirements:
+1) PHP5
+2) Prototype js
 
 Install: 
-1) Edit /views/layout/default.ctp
+1) copy /popup directory into /plugins/popup
+2) Edit /views/layout/default.ctp
 In the <head> of your layout add:
   <?php echo $html->css("/popup/css/default_theme"); ?>
   
 Somewhere in the default.ctp page add:
   <div id="popups" style="z-index: 1000;"></div>
 
-2) Add Popup.Popup helper in your controller helper list
+3) Add Popup.Popup helper in your controller helper list
    var $helpers = array('Popup.Popup');
    
    
@@ -41,3 +44,8 @@ Examples:
   
   //load /views/elements/my_element.ctp into the popup
   $popup->link('click me', array('element' => 'my_element'));
+  
+  
+Customize:
+I will be adding more theme's soon.  Feel free to look at the default_theme for inspiration.
+I've added plenty of hooks to play around with in each popup.
