@@ -1,10 +1,19 @@
 <?php
+
   //Content
   if(isset($content) && !empty($content)){
     $popcont = $content;
   }
   elseif(isset($element) && !empty($element)){
-    $popcont = $this->element($element);
+    $passedVars = array();
+    if(count($vars)){
+      $defined_vars = get_defined_vars();
+      
+      foreach($vars as $var_key){
+        $passedVars["$var_key"] = $defined_vars[$var_key];
+      }
+    }
+    $popcont = $this->element($element, $passedVars);
   }
   else {
     $popcont = "<b>Error:</b> </i>No Data</i> <br /><br />
@@ -26,7 +35,7 @@
     <div class="fade"></div>
     <div class="popup_block">
       <div class="popup">
-        <a href="#" onclick="$('<?= $id; ?>').hide()"><img src="/img/icon_close.png" alt="close" class="cntrl" /></a>
+        <a href="#" onclick="$('<?= $id; ?>').hide()"><?= $html->image('/popup/img/icon_close.png', array('class' => 'cntrl', 'alt' => 'close')); ?></a>
         <div id="popup-content"><?= $popcont; ?></div>
       </div>
     </div>
