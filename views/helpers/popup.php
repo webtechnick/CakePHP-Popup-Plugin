@@ -46,7 +46,7 @@ class PopupHelper extends AppHelper {
     
     //the link options
     $default_link_options = array(
-      'onclick' => "$('$id').show();",
+      'onclick' => "$('$id').show(); return false;",
       'escape' => false
     );
     $link_options = array_merge($default_link_options,$options);
