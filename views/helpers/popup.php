@@ -1,26 +1,31 @@
 <?php
 class PopupHelper extends AppHelper {
   
-  /************************************************************
+  /**
     * Load Html and Javascript helpers to use for the popup link
     */
   var $helpers = array('Html', 'Javascript');
   
-  /************************************************************
+  /**
     * popup counter
     * @var int popup counter
     * @access private
     */
   var $__popups = 0;
   
-  /************************************************************
+  /**
+    *
+    */
+  var $library = 'jquery'; //jquery or prototype
+  
+  /**
     * Constructor to load in the view object so we can use our own elements.
     */
   function __construct(){
     $this->View =& ClassRegistry::getObject('view');
   }
   
-  /************************************************************
+  /**
     * Link returns a link to be used to load a css popup.
     * Option keys:
     *    'content' is the string of text that will be loaded into the popup.
@@ -46,9 +51,10 @@ class PopupHelper extends AppHelper {
     
     //the link options
     $default_link_options = array(
-      'onclick' => "$('$id').show(); return false;",
+      'onclick' => $this->__buildJsShow($id),
       'escape' => false
     );
+    
     $link_options = array_merge($default_link_options,$options);
     unset($link_options['element']);
     unset($link_options['content']);
@@ -58,16 +64,43 @@ class PopupHelper extends AppHelper {
     
     //The popup
     $popup = $this->Javascript->escapeString($this->__popup( array_merge($options, array('id' => $id)), $elementVars ));
-    $retval .= $this->Javascript->codeBlock("
-      document.observe('dom:loaded', function(){
-        $('popups').insert('$popup', {position: 'bottom'})
-      });
-    ");
-    
+    $retval .= $this->__buildJsDomReady($popup);
     return $retval;
   }
   
-  /************************************************************
+  /**
+    * Build the javascript library specific popup
+    */
+  function __buildJsShow($id){
+    if($this->library == 'jquery'){
+      return "\$('#$id').show(); return false;";
+    }
+    else{
+      return "\$('$id').show(); return false;";
+    }
+  }
+  
+  /**
+    * Build the Javascript library specific popup dom ready funtion
+    */
+  function __buildJsDomReady($popup){
+    if($this->library == 'jquery'){
+      return $this->Javascript->codeBlock("
+        \$(document).ready(function(){
+          $('$popup').appendTo('#popups');
+        });
+      ");
+    }
+    else {
+      return $this->Javascript->codeBlock("
+        document.observe('dom:loaded', function(){
+          \$('popups').insert('$popup', {position: 'bottom'})
+        });
+      ");
+    }
+  }
+  
+  /**
     * retuns a new unique popup id.
     * @access private
     * @return String popup_id
@@ -76,7 +109,7 @@ class PopupHelper extends AppHelper {
     return 'popup_' . $this->__popups++;
   }
   
-  /************************************************************
+  /**
     * returns a popup element
     * @access private
     * @param $options passed in options from link
