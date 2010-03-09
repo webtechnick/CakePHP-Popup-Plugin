@@ -4,13 +4,13 @@ CakePHP Popup Plugin is a plugin that allows for easy to manage css/xhtml popup 
 Content for the popups can be loaded dynamically or read from an element.
 
 Author: Nick Baker
-Version: 1.0
+Version: 1.5
 Website: http://www.webtechnick.com
-Licence: MIT
+License: MIT
 
 Requirements:
 1) PHP5
-2) Prototype js
+2) Prototype or JQuery
 
 Install: 
 1) copy /popup directory into /plugins/popup
@@ -22,7 +22,11 @@ Somewhere in the default.ctp page add:
   <div id="popups" style="z-index: 1000;"></div>
 
 3) Add Popup.Popup helper in your controller helper list
-   var $helpers = array('Popup.Popup');
+   var $helpers = array('Popup.Popup'); //Prototype engine default
+   
+3b) Load A different Javascript Library as the Engine
+   var $helpers = array('Popup.Popup' => array('Jquery')); //use Jquery
+   var $helpers = array('Popup.Popup' => array('Prototype')); //use Prototype
    
    
 Usage:

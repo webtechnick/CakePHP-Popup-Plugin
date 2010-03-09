@@ -1,4 +1,15 @@
 <?php
+/**
+  * == CakePHP Popup Plugin ==
+  *
+  * CakePHP Popup Plugin is a plugin that allows for easy to manage css/xhtml popup content.
+  * Content for the popups can be loaded dynamically or read from an element.
+
+  * @Author: Nick Baker
+  * @Version: 1.5
+  * @Link: http://www.webtechnick.com
+  * @License: MIT
+  */
 class PopupHelper extends AppHelper {
   
   /**
@@ -14,30 +25,38 @@ class PopupHelper extends AppHelper {
   var $__popups = 0;
   
   /**
-    *
+    * Javascript library to use (Jquery or Prototype) Prototype by default.
+    * @access public
     */
-  var $library = 'jquery'; //jquery or prototype
+  var $library = 'Prototype'; //Jquery or Prototype
   
   /**
     * Constructor to load in the view object so we can use our own elements.
+    * Set the javascript library if settings passed in.
+    * @param array settings
     */
-  function __construct(){
+  function __construct($settings = array()){
+    if(is_array($settings) && isset($settings[0])){
+      $this->library = $settings[0];
+    }
+    elseif(is_string($settings)){
+      $this->library = $settings;
+    }
     $this->View =& ClassRegistry::getObject('view');
   }
   
   /**
     * Link returns a link to be used to load a css popup.
     * Option keys:
-    *    'content' is the string of text that will be loaded into the popup.
-    *    'element' is the element file (/views/elements/) to be loaded into the popup.
+    *  - 'content' is the string of text that will be loaded into the popup.
+    *  - 'element' is the element file (/views/elements/) to be loaded into the popup.
     *  If both option keys are set, 'content' takes priority.
     *
     *  Any other option key will be used by the HtmlHelper. 
     *  View the HtmlHelper options (http://book.cakephp.org/view/836/link) for more information.
     *
-    * Examples:
-    *   $popup->link('click me', array('content' => 'this will appear in the popup'));
-    *   $popup->link('click me', array('element' => 'my_element', array('myvar' => 'hello')); //loads /views/elements/my_element.ctp
+    * @example $popup->link('click me', array('content' => 'this will appear in the popup'));
+    * @example $popup->link('click me', array('element' => 'my_element', array('myvar' => 'hello')); //loads /views/elements/my_element.ctp
     *
     * @author Nick Baker
     * @param String $title is the text/image to be displayed as a link 
@@ -70,9 +89,12 @@ class PopupHelper extends AppHelper {
   
   /**
     * Build the javascript library specific popup
+    * @param string id of element to show
+    * @return string  of javascript onclick element
+    * @access private
     */
   function __buildJsShow($id){
-    if($this->library == 'jquery'){
+    if($this->library == 'Jquery'){
       return "\$('#$id').show(); return false;";
     }
     else{
@@ -82,12 +104,15 @@ class PopupHelper extends AppHelper {
   
   /**
     * Build the Javascript library specific popup dom ready funtion
+    * @param string id of element to show
+    * @return string  of javascript document ready to build
+    * @access private
     */
   function __buildJsDomReady($popup){
-    if($this->library == 'jquery'){
+    if($this->library == 'Jquery'){
       return $this->Javascript->codeBlock("
         \$(document).ready(function(){
-          $('$popup').appendTo('#popups');
+          \$('$popup').appendTo('#popups');
         });
       ");
     }
@@ -118,7 +143,7 @@ class PopupHelper extends AppHelper {
     */
   function __popup($options = array(), $elementVars = array()){
     $vars = array_keys($elementVars);
-    $popup_options = array_merge($options, $elementVars, array('plugin' => 'popup', 'vars' => $vars));
+    $popup_options = array_merge($options, $elementVars, array('plugin' => 'popup', 'library' => $this->library, 'vars' => $vars));
     return $this->View->element('popup', $popup_options);
   }
 
