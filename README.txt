@@ -8,11 +8,19 @@ Version: 1.5
 Website: http://www.webtechnick.com
 License: MIT
 
+Get it
+======================
+Download: http://projects.webtechnick.com/popup.tar.gz
+SVN: http://svn.github.com/webtechnick/CakePHP-Popup-Plugin
+GIT: git@github.com:webtechnick/CakePHP-Popup-Plugin.git
+
 Requirements:
+======================
 1) PHP5
 2) Prototype or JQuery
 
-Install: 
+Install:
+======================
 1) copy /popup directory into /plugins/popup
 2) Edit /views/layout/default.ctp
 In the <head> of your layout add:
@@ -30,26 +38,28 @@ Somewhere in the default.ctp page add:
    
    
 Usage:
-/************************************************************
-  * Link returns a link to be used to load a popup.
-  * Option keys:
-  *    'content' is the string of text that will be loaded into the popup.
-  *    'element' is the element file (/views/elements/) to be loaded into the popup.
-  *  If both option keys are set, 'content' takes priority.
-  *
-  *  Any other option key will be used by the HtmlHelper. 
-  *  View the HtmlHelper options (http://book.cakephp.org/view/836/link) for more information.
-  *
+======================
+ Link returns a link to be used to load a popup.
+ Option keys:
+  -  'content' is the string of text that will be loaded into the popup.
+  -  'element' is the element file (/views/elements/) to be loaded into the popup.
+  If both option keys are set, 'content' takes priority.
+
+  Any other option key will be used by the HtmlHelper. 
+  View the HtmlHelper options (http://book.cakephp.org/view/836/link) for more information.
+
 $popup->link(String $title, Array $options);
 
 Examples:
-  //load string content into the popup
-  $popup->link('click me', array('content' => 'this will appear in the popup'));
+======================
+//load string content into the popup
+$popup->link('click me', array('content' => 'this will appear in the popup'));
   
-  //load /views/elements/my_element.ctp into the popup
-  $popup->link('click me', array('element' => 'my_element'));
+//load /views/elements/my_element.ctp into the popup
+$popup->link('click me', array('element' => 'my_element'));
   
   
 Customize:
+======================
 I will be adding more theme's soon.  Feel free to look at the default_theme for inspiration.
 I've added plenty of hooks to play around with in each popup.
