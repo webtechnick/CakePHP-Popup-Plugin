@@ -29,14 +29,17 @@
   if($theme){
     echo $html->css("popup/css/$theme");
   }
+
+  //draggdrop
+  $draggable = isset($draggable) && $draggable; //boolean
   //Library to use
   $library = isset($library) ? $library : 'Prototype';
-  $onclick_pre = ($library == 'Prototype') ? '' : '#'; 
+  $onclick_pre = ($library == 'Prototype') ? '' : '#';
 ?>
 <div id="<?= $id; ?>" style="display:none;">
   <div class="hideshow">
     <div class="fade"></div>
-    <div class="popup_block">
+    <div id="drag-<?= $id ?>" class="popup_block">
       <div class="popup">
         <a href="#" onclick="$('<?= $onclick_pre . $id; ?>').hide(); return false;"><?= $html->image('/popup/img/icon_close.png', array('class' => 'cntrl', 'alt' => 'close')); ?></a>
         <div id="popup-content"><?= $popcont; ?></div>
@@ -44,3 +47,7 @@
     </div>
   </div>
 </div>
+
+<? if($draggable && $library == 'Prototype'): ?>
+  <?= $html->scriptBlock("new Draggable('drag-$id');"); ?>
+<?endif;?>
