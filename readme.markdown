@@ -20,15 +20,15 @@ Content for the popups can be loaded dynamically or read from an element.
 
 	git clone git://github.com/webtechnick/CakePHP-Popup-Plugin.git plugins/popup
 	
-2. Edit app`/views/layout/default.ctp` In the <head> of your layout add:
+2. Edit app`/views/layout/default.ctp` in the <head> of your layout add
 
 	<?php echo $this->Html->css("/popup/css/default_theme"); ?>
-  
-Somewhere in the your layout add:
+
+3. Somewhere in the your layout add
 
 	<div id="popups" style="z-index: 1000;"></div>
 
-3. Add `Popup.Popup` helper in your controller helper list
+4. Add `Popup.Popup` helper in your controller helper list
 
 	var $helpers = array('Popup.Popup'); //Prototype engine default
 	var $helpers = array('Popup.Popup' => array('Jquery')); //use Jquery
