@@ -11,7 +11,7 @@ class PopupHelperTest extends PopupHelper{
     $this->__elementVars = $elementVars;
   }
 }
-class PopupHelperTestCase extends CakeTestCase {
+class PopupHelperTest extends CakeTestCase {
   
   function startTest(){
     $this->Popup = new PopupHelperTest();
