@@ -6,7 +6,7 @@
 * Content for the popups can be loaded dynamically or read from an element.
 
 * @Author: Nick Baker
-* @Version: 1.5
+* @Version: 2.0
 * @Link: http://www.webtechnick.com
 * @License: MIT
 */
@@ -15,7 +15,7 @@ class PopupHelper extends AppHelper {
 	/**
 	* Load Html and Javascript helpers to use for the popup link
 	*/
-	var $helpers = array('Html', 'Javascript');
+	var $helpers = array('Html', 'Js');
 	
 	/**
 	* popup counter
@@ -35,14 +35,14 @@ class PopupHelper extends AppHelper {
 	* Set the javascript library if settings passed in.
 	* @param array settings
 	*/
-	function __construct($settings = array()){
+	function __construct(View $View, $settings = array()){
 		if(is_array($settings) && isset($settings[0])){
 			$this->library = $settings[0];
 		}
 		elseif(is_string($settings)){
 			$this->library = $settings;
 		}
-		$this->View =& ClassRegistry::getObject('view');
+		$this->View = $View;
 	}
 	
 	/**
@@ -82,7 +82,7 @@ class PopupHelper extends AppHelper {
 		$retval = $this->Html->link($title, '#', $link_options);
 		
 		//The popup
-		$popup = $this->Javascript->escapeString($this->__popup(array_merge($options, array('id' => $id)), $elementVars ));
+		$popup = $this->Js->escape($this->__popup(array_merge($options, array('id' => $id)), $elementVars ));
 		$retval .= $this->__buildJsDomReady($popup);
 		return $retval;
 	}
@@ -94,10 +94,9 @@ class PopupHelper extends AppHelper {
 	* @access private
 	*/
 	function __buildJsShow($id){
-		if($this->library == 'Jquery'){
+		if ($this->library == 'Jquery') {
 			return "\$('#$id').show(); return false;";
-		}
-		else{
+		} else {
 			return "\$('$id').show(); return false;";
 		}
 	}
@@ -109,15 +108,14 @@ class PopupHelper extends AppHelper {
 	* @access private
 	*/
 	function __buildJsDomReady($popup){
-		if($this->library == 'Jquery'){
-			return $this->Javascript->codeBlock("
+		if ($this->library == 'Jquery') {
+			return $this->Html->scriptBlock("
 				\$(document).ready(function(){
 					\$('$popup').appendTo('#popups');
 				});
 			");
-		}
-		else {
-			return $this->Javascript->codeBlock("
+		}	else {
+			return $this->Html->scriptBlock("
 				document.observe('dom:loaded', function(){
 					\$('popups').insert('$popup', {position: 'bottom'})
 				});
@@ -143,9 +141,7 @@ class PopupHelper extends AppHelper {
 	*/
 	function __popup($options = array(), $elementVars = array()){
 		$vars = array_keys($elementVars);
-		$popup_options = array_merge($options, $elementVars, array('plugin' => 'popup', 'library' => $this->library, 'vars' => $vars));
-		return $this->View->element('popup', $popup_options);
+		$popup_options = array_merge($options, $elementVars, array('library' => $this->library, 'vars' => $vars));
+		return $this->View->element('Popup.popup', $popup_options);
 	}
-	
 }
-?>

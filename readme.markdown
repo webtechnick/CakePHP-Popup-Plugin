@@ -1,6 +1,6 @@
 # CakePHP Popup Plugin
 * Author: Nick Baker <nick@webtechnick.com>
-* Version: 1.5
+* Version: 2.0
 * Website: <http://www.webtechnick.com>
 * License: MIT
 
@@ -10,17 +10,18 @@ Content for the popups can be loaded dynamically or read from an element.
 # Changelog
 * 1.0 Initial Release
 * 1.5 Updated to use Jquery or Prototype engines.
+* 2.0 Updated to CakePHP 2.x
 
 # Requirements
 1. PHP5
 2. Prototype or JQuery
 
 # Install
-1. clone into `app/plugins/popup` directory
+1. clone into `app/Plugin/Popup` directory
 
-		git clone git://github.com/webtechnick/CakePHP-Popup-Plugin.git plugins/popup
+		git clone git://github.com/webtechnick/CakePHP-Popup-Plugin.git app/Plugin/Popup
 	
-2. Edit app`/views/layout/default.ctp` in the <head> of your layout add
+2. Edit app`/View/Layouts/Default.ctp` in the <head> of your layout add
 
 		<?php echo $this->Html->css("/popup/css/default_theme"); ?>
 
@@ -30,9 +31,9 @@ Content for the popups can be loaded dynamically or read from an element.
 
 4. Add `Popup.Popup` helper in your controller helper list
 
-		var $helpers = array('Popup.Popup'); //Prototype engine default
-		var $helpers = array('Popup.Popup' => array('Jquery')); //use Jquery
-		var $helpers = array('Popup.Popup' => array('Prototype')); //use Prototype
+		public $helpers = array('Popup.Popup'); //Prototype engine default
+		public $helpers = array('Popup.Popup' => array('Jquery')); //use Jquery
+		public $helpers = array('Popup.Popup' => array('Prototype')); //use Prototype
    
    
 # Usage
