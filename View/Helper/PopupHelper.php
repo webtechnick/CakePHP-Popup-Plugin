@@ -38,11 +38,11 @@ class PopupHelper extends AppHelper {
 	function __construct(View $View, $settings = array()){
 		if(is_array($settings) && isset($settings[0])){
 			$this->library = $settings[0];
-		}
-		elseif(is_string($settings)){
+		}	elseif(is_string($settings)){
 			$this->library = $settings;
 		}
 		$this->View = $View;
+		parent::__construct($View, $settings);
 	}
 	
 	/**
@@ -117,7 +117,7 @@ class PopupHelper extends AppHelper {
 		}	else {
 			return $this->Html->scriptBlock("
 				document.observe('dom:loaded', function(){
-					\$('popups').insert('$popup', {position: 'bottom'})
+					\$('popups').insert(\"$popup\", {position: 'bottom'})
 				});
 			");
 		}
