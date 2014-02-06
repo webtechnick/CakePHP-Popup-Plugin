@@ -95,9 +95,9 @@ class PopupHelper extends AppHelper {
 	*/
 	function __buildJsShow($id){
 		if ($this->library == 'Jquery') {
-			return "\$('#$id').show(); return false;";
+			return '$("#'.$id.'").show(); return false;';
 		} else {
-			return "\$('$id').show(); return false;";
+			return '$("'.$id.'").show(); return false;';
 		}
 	}
 	
@@ -109,11 +109,11 @@ class PopupHelper extends AppHelper {
 	*/
 	function __buildJsDomReady($popup){
 		if ($this->library == 'Jquery') {
-			return $this->Html->scriptBlock("
-				\$(document).ready(function(){
-					\$('$popup').appendTo('#popups');
+			return $this->Html->scriptBlock('
+				$(document).ready(function(){
+					$("#'.$popup.'").appendTo("#popups");
 				});
-			");
+			');
 		}	else {
 			return $this->Html->scriptBlock("
 				document.observe('dom:loaded', function(){
